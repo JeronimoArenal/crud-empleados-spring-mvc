@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>crud-empleados-spring-mvc</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>application</artifactId>
+    <name>application</name>
+    <description>Módulo ejecutable final (Bootstrapper) del ecosistema</description>
+
+    <dependencies>
+        <!--
+          Único módulo local necesario.
+          Por transitividad (cascada) arrastra: security -> service -> persistence -> domain -> common
+        -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>web-extranet</artifactId>
+        </dependency>
+
+        <!-- Starter global que maneja configuraciones transversales de la app -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Este es el ÚNICO módulo que empaqueta el Fat-JAR ejecutable -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Ruta de tu clase de arranque personalizada -->
+                    <mainClass>com.example.application.CrudEmpleadosSpringApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

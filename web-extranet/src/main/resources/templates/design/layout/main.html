@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="~{design/head/main :: home}"></head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<!-- BARRA DE NAVEGACIÓN REAL -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-4">
+    <div class="container">
+
+        <!-- BRAND -->
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="fa-solid fa-users-gear me-2"></i>
+            <span th:text="#{word.welcome}">INTRANET EMPLEADOS</span>
+        </a>
+
+        <!-- TOGGLE (mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- MENU -->
+        <div class="collapse navbar-collapse" id="topNav">
+
+            <!-- IZQUIERDA -Enlaces -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item" th:each="entry : ${menuUrls}">
+                    <!-- ⚡ AQUÍ: Modifica th:text para que evalúe la clave de traducción de forma dinámica -->
+                    <a class="nav-link" th:href="${entry.value}" th:text="#{__${entry.key}__}">Enlace</a>
+                </li>
+            </ul>
+
+
+            <!-- DERECHA -->
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+
+                <!-- 🌐 IDIOMA -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <span th:text="#{word.language}">Idioma</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" th:href="@{''(lang=es)}">Español</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{''(lang=en)}">English</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 👤 LOGIN -->
+                <li class="nav-item">
+                    <a class="btn btn-outline-light btn-sm"
+                       th:href="@{/login}"
+                       th:text="#{word.login}">
+                        Login
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTENIDO DINÁMICO de las paginas en esta seccion MAIN -->
+<main class="flex-grow-1">
+    <div th:replace="~{ ${contentTemplate} :: content }">
+        <!-- Aquí se inyectará home/home.html -->
+    </div>
+</main>
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <small>© 2026 Ecosistema No Hexagonal - Gestión Interna de Empleados</small>
+    </div>
+</footer>
+
+</body>
+</html>

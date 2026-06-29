@@ -1,0 +1,162 @@
+<div xmlns:th="http://thymeleaf.org" th:fragment="content">
+    <div class="container py-4">
+
+        <!-- Enlaces de navegación superiores -->
+        <div class="mb-4 d-flex align-items-center gap-3">
+            <a th:href="@{/}" class="text-success fw-bold text-decoration-none">
+                <i class="fa-solid fa-arrow-left me-1"></i>Volver al Inicio
+            </a>
+
+            <a th:href="@{/intranet/estudiantes/add}" class="btn btn-success" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+                <i class="fa-solid fa-plus me-1"></i>Añadir Estudiante
+            </a>
+        </div>
+
+        <!-- MENSAJE ÉXITO -->
+        <div th:if="${exitoMensaje != null}" class="alert alert-success alert-dismissible fade show p-3 small custom-alert" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <span th:text="${exitoMensaje}"> Operación realizada correctamente </span>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+
+        <!-- MENSAJE ERROR -->
+        <div th:if="${errorMensaje != null}" class="alert-error" role="alert" style="margin-bottom:1.5rem;">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span th:text="${errorMensaje}">Error inesperado </span>
+        </div>
+
+        <!-- Cabecera -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 m-0 fw-bold text-secondary" style="letter-spacing:0.5px;">
+                Registros obtenidos desde la Base Datos
+                <span th:if="${allEstudiantes != null}" th:text="'(' + ${#lists.size(allEstudiantes)} + ')'">
+                    (0)
+                </span>
+
+            </h2>
+        </div>
+
+        <!-- TABLA -->
+        <div th:if="${errorMensaje == null && allEstudiantes != null && !#lists.isEmpty(allEstudiantes)}"
+             class="card shadow-sm border-0 custom-table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 custom-list-table">
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Completo</th>
+                        <th>Género</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Beca</th>
+                        <th>Asignaturas</th>
+                        <th>Facultad</th>
+                        <th>Contacto</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="estud : ${allEstudiantes}">
+
+                        <td class="fw-bold text-secondary" th:text="${estud.id}">1
+                        </td>
+                        <td class="fw-semibold" th:text="${estud.nombre} + ' ' + ${estud.primerApellido} + ' ' + ${estud.segundoApellido}">
+                            Nombre Completo
+                        </td>
+                        <td>
+                            <span class="badge badge-secondary" th:text="${estud.genero != null ? estud.genero : 'N/A'}">
+                                No disponible
+                            </span>
+                        </td>
+                        <td th:text="${estud.fechaNacimiento != null ? estud.fechaNacimiento : 'N/A'}">
+                            2000-01-01
+                        </td>
+                        <td class="fw-bold text-dark" th:text="${estud.beca != null ? #numbers.formatDecimal(estud.beca,1,'DEFAULT',2,'DEFAULT') : '0.00'}">
+                            0.00
+                        </td>
+                        <td th:text="${estud.totalAsignaturas}">
+                            0
+                        </td>
+                        <td>
+                            <span th:class="${estud.facultad != null} ? 'badge badge-success' : 'text-muted fst-italic'"
+                                  th:text="${estud.facultad != null ? estud.facultad.nombre : 'Sin asignar'}">
+                                Facultad
+                            </span>
+                        </td>
+
+                        <!-- CONTACTO -->
+                        <td>
+                            <div class="contact-info-sm">
+                                <div>
+                                    <strong class="text-muted">Tel:</strong>
+                                    <span th:if="${!#lists.isEmpty(estud.telefonos)}">
+                                        <span th:each="tel,iterStat : ${estud.telefonos}"
+                                              th:text="${tel.numero} + ${!iterStat.last ? '; ' : ''}">
+                                        </span>
+                                    </span>
+                                    <span th:if="${#lists.isEmpty(estud.telefonos)}" class="text-muted fst-italic"
+                                          th:text="#{message.no.data.recorded}">
+                                    </span>
+                                </div>
+                                <div>
+                                    <strong class="text-muted">Email:</strong>
+                                    <span th:if="${!#lists.isEmpty(estud.emails)}">
+                                        <span th:each="cor,iterStat : ${estud.emails}"
+                                              th:text="${cor.email} + ${!iterStat.last ? '; ' : ''}">
+                                        </span>
+                                    </span>
+
+                                    <span th:if="${#lists.isEmpty(estud.emails)}" class="text-muted fst-italic"
+                                          th:text="#{message.no.data.recorded}">
+                                    </span>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <!-- ACCIONES -->
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center gap-2 action-links">
+                                <a th:href="@{/intranet/estudiantes/detalle/{id}(id=${estud.id})}">
+                                    Detalles
+                                </a>
+                                <span class="divider">|</span>
+                                <a th:href="@{/intranet/estudiantes/profile/{id}(id=${estud.id})}">
+                                    Perfil
+                                </a>
+                                <span class="divider">|</span>
+                                <a class="text-primary-emphasis" th:href="@{/intranet/estudiantes/edit/{id}(id=${estud.id})}">
+                                    Editar
+                                </a>
+
+                                <span class="divider">|</span>
+                                <form th:action="@{/intranet/estudiantes/delete/{id}(id=${estud.id})}" method="post" class="d-inline"
+                                      th:onclick="return confirm('¿Estás seguro de que deseas eliminar a ' + [[${estud.nombre}]] + ' y todos sus contactos?');">
+
+                                    <button type="submit"
+                                            class="text-danger border-0 bg-transparent p-0 fw-bold">
+                                        Eliminar
+                                    </button>
+
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SIN DATOS -->
+        <div th:if="${errorMensaje == null && (allEstudiantes == null || #lists.isEmpty(allEstudiantes))}"
+             class="no-image-placeholder py-5">
+            <i class="fa-solid fa-folder-open mb-2"></i>
+            <span class="d-block text-secondary fw-semibold">
+                No se encontraron registros en la tabla de estudiantes.
+            </span>
+        </div>
+    </div>
+</div>

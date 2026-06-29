@@ -1,0 +1,391 @@
+/* ==================================================
+   VARIABLES GLOBALES
+   ================================================== */
+
+:root {
+    /* Fuentes */
+    --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bs-heading-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bs-body-font-size: 14px;
+    --bs-body-font-weight: 400;
+    --bs-heading-font-weight: 600;
+
+    /* GOD Theme */
+    --color-god-main: linear-gradient(135deg, #f06d06, #f1f10b);
+    --color-god-border: #f06d06;
+    --color-god-text: #6b3103;
+    --color-god-btn-idle: #fff9c4;
+
+    /* Semánticos */
+    --god-warning: #f2c400;
+    --god-success: #4caf50;
+    --god-danger: #c62828;
+    --god-info: #0288d1;
+    --god-creme: #f7e864;
+}
+
+/* ==================================================
+   UTILIDADES
+   ================================================== */
+
+.text-god-creme {
+    color: var(--god-creme) !important;
+}
+
+.theme-god {
+    background: var(--color-god-main);
+    color: #fff;
+    border: 1px solid var(--color-god-border);
+}
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+header {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.header-god {
+    background: var(--color-god-main) !important;
+    color: #fff !important;
+    border-bottom: 3px solid var(--color-god-text);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+}
+
+.logo-img img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 0 3px #848484;
+}
+
+.right_header_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right_header_info a {
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+    .right_header_info a {
+        text-align: center;
+    }
+}
+
+/* ==================================================
+   CARDS
+   ================================================== */
+
+.god-card,
+.god-menu-card,
+.admin-card-god {
+    background: var(--color-god-main);
+    border-radius: 12px;
+}
+
+.god-card {
+    overflow: hidden;
+    color: #fff;
+    font-weight: 500;
+    padding: .75rem 1rem;
+    border-bottom: 2px solid #061a30;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.god-menu-card {
+    padding: 10px;
+    border: none !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.admin-card-god {
+    border: none;
+}
+
+/* ==================================================
+   CABECERAS DE CARD
+   ================================================== */
+
+.menu-card-header {
+    display: flex;
+    align-items: center;
+    padding: .6rem 1rem !important;
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(0,0,0,.25);
+}
+
+.menu-card-header.god {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.menu-card-header.default {
+    background: linear-gradient(135deg, #878c91, #6c757d);
+    border-bottom: 2px solid #5c5c5c;
+}
+
+.menu-card-header h5 {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: .9rem !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,.2);
+}
+
+.menu-card-header i {
+    opacity: .9;
+}
+
+/* ==================================================
+   BOTONES GOD
+   ================================================== */
+
+.god-menu-btn,
+.god-nav-btn-modern {
+    background: var(--color-god-main) !important;
+    color: #fff !important;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all .3s ease;
+    text-decoration: none;
+}
+
+.god-menu-btn {
+    border: 1px solid #c45a05 !important;
+    margin-bottom: 4px;
+}
+
+.god-nav-btn-modern {
+    border: 1px solid var(--color-god-border) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+}
+
+.god-menu-btn:hover,
+.god-menu-btn.active,
+.god-nav-btn-modern:hover,
+.god-nav-btn-modern.active {
+    background: var(--color-god-btn-idle) !important;
+    color: var(--color-god-text) !important;
+    border-color: var(--color-god-border) !important;
+    box-shadow: 0 4px 12px rgba(240,109,6,.3);
+    text-shadow: none;
+}
+
+/* ==================================================
+   PANEL DE CONTENIDO
+   ================================================== */
+
+.god-content-panel {
+    background: rgba(59, 70, 82, .75) !important;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+/* ==================================================
+   ADMIN CARD
+   ================================================== */
+
+.admin-avatar {
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border: 2px solid var(--color-god-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.admin-avatar i {
+    color: var(--color-god-border);
+    font-size: 1.3rem;
+}
+
+.admin-name {
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .3px;
+}
+
+.admin-status {
+    color: var(--color-god-btn-idle);
+    font-size: .8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .3s ease;
+}
+
+.admin-status:hover {
+    color: #fff;
+}
+
+/* ==================================================
+   FAMILY CARD
+   ================================================== */
+
+.family-horizontal-card {
+    background: rgba(26,26,26,.7) !important;
+    border: 1px solid rgba(240,109,6,.3) !important;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all .3s ease;
+    margin-bottom: .5rem;
+}
+
+.family-horizontal-card:hover {
+    transform: translateX(5px);
+    border-color: var(--color-god-border) !important;
+    background: rgba(35,35,35,.8) !important;
+}
+
+.family-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: rgba(255,255,255,.1);
+}
+
+.family-label {
+    color: #f1f10b;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.family-name {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.family-link {
+    color: #f1f10b !important;
+    font-size: .85rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.family-link:hover {
+    color: var(--color-god-border) !important;
+}
+
+/* ==================================================
+   FORM ELEMENTS
+   ================================================== */
+
+.select-menu {
+    border: none !important;
+    border-radius: 8px;
+    padding: .35rem .6rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all .25s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.15);
+}
+
+.select-menu:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 .25rem .5rem rgba(0,0,0,.25);
+}
+
+.select-menu:focus {
+    outline: none !important;
+}
+
+.menu-glass-body {
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(4px);
+}
+
+/* ==================================================
+   VIDEO RESPONSIVE
+   ================================================== */
+
+.video-responsive {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+}
+
+.video-responsive iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==================================================
+   BACKGROUND DINÁMICO
+   ================================================== */
+
+.bg-dynamic {
+    background-image: var(--bg-url);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    min-height: 100vh;
+}
+
+@media (min-width: 992px) {
+    .bg-dynamic {
+        background-attachment: fixed;
+    }
+}
+
+/* ==================================================
+   OTROS
+   ================================================== */
+
+.army-card-header.header-god {
+    background: var(--color-god-main) !important;
+    color: #fff !important;
+    border-bottom: 3px solid var(--color-god-text) !important;
+}
+
+.army-card-header span,
+.army-card-header i {
+    color: #fff;
+}
+
+.btn-outline-light:hover span {
+    color: #000 !important;
+}
+
+h2 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+}
+
+.offcanvas.theme-god {
+    background: var(--color-god-main) !important;
+    border-left: 2px solid var(--color-god-text);
+}

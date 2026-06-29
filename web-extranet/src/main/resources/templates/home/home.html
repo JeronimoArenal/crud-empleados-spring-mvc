@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
+  <div class="container py-1">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+      <div class="container-fluid py-5">
+        <!-- Mostramos el título dinámico que pasa el HomeNodeLoader -->
+        <h1 class="display-5 fw-bold" th:text="#{header.label.title}">¡Bienvenido a mi aplicación!</h1>
+        <p class="col-md-8 fs-4" th:text="#{message.onePlanet}">Esta es la página de inicio de nuestro nuevo sistema.</p>
+        <button class="btn btn-primary btn-lg" type="button">Empezar</button>
+      </div>
+    </div>
+
+    <!-- Sección dinámica para mostrar los módulos cargados de la base de datos -->
+    <div class="row align-items-md-stretch">
+      <div class="col-md-12">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Módulos Activos</h2>
+          <ul>
+            <!-- El bucle recorre de forma dinámica la lista 'activeModules' de tu cargador -->
+            <li th:each="modulo : ${activeModules}" th:text="${modulo}">Módulo Ejemplo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

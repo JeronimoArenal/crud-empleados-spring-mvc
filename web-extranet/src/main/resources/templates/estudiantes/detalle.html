@@ -1,0 +1,92 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
+    <div class="form-container">
+
+        <div class="form-card">
+
+            <!-- Encabezado del Panel -->
+            <div class="form-header">
+                <h3>
+                    <i class="fa-solid fa-address-book"></i>
+                    <span>Panel de Información de Contacto</span>
+                </h3>
+            </div>
+
+            <!-- Cuerpo del Panel -->
+            <div class="form-body">
+
+                <!-- Condicional: Si el empleado existe -->
+                <div th:if="${estudiante != null}">
+
+                    <!-- SECCIÓN: FOTO DE PERFIL DEL EMPLEADO -->
+                    <div class="form-group">
+                        <!-- Muestra la foto actual si el empleado tiene una guardada -->
+                        <div th:if="${estudiante.image != null and !estudiante.image.empty}" class="profile-image-container">
+                            <img th:src="@{|/uploads/profiles/estudiante/${estudiante.image}|}" class="profile-image" alt="Foto de perfil">
+
+                        </div>
+
+                        <!-- Estado con silueta genérica si no tiene foto asignada -->
+                        <div th:if="${estudiante.image == null or estudiante.image.empty}" class="no-image-placeholder">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <span>Sin foto de perfil</span>
+                        </div>
+                    </div>
+
+                    <!-- Subtítulo con el Nombre del Empleado -->
+                    <h2 class="detail-subtitle" style="text-align: center; margin-top: 1rem;">
+                        Datos de: <span th:text="${estudiante.nombre} + ' ' + ${estudiante.primerApellido}">Nombre Estudiante</span>
+                    </h2>
+
+                    <!-- Sección de Información estructurada -->
+                    <div class="detail-info-block">
+
+                        <!-- Bloque: Departamento -->
+                        <div class="detail-item">
+                            <label>Departamento</label>
+                            <div th:if="${estudiante.facultad != null}" class="detail-content">
+                                <strong>Nombre:</strong> <span th:text="${estudiante.facultad.nombre}">Tecnología</span>
+                            </div>
+                            <div th:if="${estudiante.facultad == null}" class="detail-content text-muted fst-italic">Sin asignar</div>
+                        </div>
+
+                        <!-- Correos Electrónicos -->
+                        <div class="detail-item">
+                            <label>Correos Electrónicos</label>
+                            <div th:if="${!estudiante.emails.empty}" class="detail-badges">
+                                <span th:each="corr : ${estudiante.emails}" class="badge badge-success" th:text="${corr.email}">
+                                    ejemplo@empresa.com
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Teléfonos -->
+                        <div class="detail-item">
+                            <label>Teléfonos</label>
+
+                            <div th:if="${!estudiante.telefonos.empty}" class="detail-badges">
+                                <span th:each="tel : ${estudiante.telefonos}" class="badge badge-secondary" th:text="${tel.numero}">
+                                    600123456
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Mensaje alternativo si el objeto llega nulo -->
+                <div th:if="${estudiante == null}" class="alert-error" role="alert">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>No se encontró la información del empleado.</span>
+                </div>
+
+                <!-- Botones de Acción / Retorno -->
+                <div class="form-actions">
+                    <a th:href="@{/intranet/estudiantes/list}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Volver al Listado
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div xmlns:th="http://thymeleaf.org" th:fragment="content">
+  <div class="container py-4">
+
+    <!-- Enlaces de navegación superiores -->
+    <div class="mb-4 d-flex align-items-center gap-3">
+      <a th:href="@{/}" class="text-success fw-bold text-decoration-none">
+        <i class="fa-solid fa-arrow-left me-1"></i> Volver al Inicio
+      </a>
+      <a th:href="@{/intranet/empleados/add}" class="btn btn-success" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+        <i class="fa-solid fa-plus me-1"></i> Añadir Empleado
+      </a>
+    </div>
+
+    <!-- ALERTA DE ÉXITO -->
+    <div th:if="${exitoMensaje != null}" class="alert alert-success alert-dismissible fade show p-3 small custom-alert" role="alert">
+      <i class="fa-solid fa-circle-check me-2"></i>
+      <span th:text="${exitoMensaje}">¡Operación realizada con éxito!</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: 1rem;"></button>
+    </div>
+
+    <!-- ALERTA DE ERROR -->
+    <div th:if="${errorMensaje != null}" class="alert-error" role="alert" style="margin-bottom: 1.5rem;">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span th:text="${errorMensaje}">Ha ocurrido un error inesperado</span>
+    </div>
+
+    <!-- Encabezado con contador dinámico -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 m-0 fw-bold text-secondary" style="letter-spacing: 0.5px;">
+        Registros obtenidos desde la Base Datos
+        <span th:if="${allEmpleados != null}" th:text="'(' + ${#lists.size(allEmpleados)} + ')'">(0)</span>
+      </h2>
+    </div>
+
+    <!-- Tabla de datos (Mantiene la responsividad de Bootstrap pero adopta la estética limpia de la card) -->
+    <div th:if="${errorMensaje == null && allEmpleados != null && !#lists.isEmpty(allEmpleados)}" class="card shadow-sm border-0 custom-table-card">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 custom-list-table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th th:text="#{word.firstName} + ' ' + #{word.firstSurname} + ' ' + #{word.secondSurname}">Nombre Completo</th>
+            <th>[[#{word.gender}]]</th>
+            <th>Fecha Alta</th>
+            <th>Salario</th>
+            <th>Departamento</th>
+            <th>[[#{word.contact}]]</th>
+            <th class="text-center">[[#{word.actions}]]</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="emp : ${allEmpleados}">
+            <td th:text="${emp.id}" class="fw-bold text-secondary">1</td>
+            <td th:text="${emp.nombre} + ' ' + ${emp.primerApellido} + ' ' + ${emp.segundoApellido}" class="fw-semibold">Juan Pérez</td>
+            <td><span class="badge badge-secondary" th:text="${emp.genero != null ? emp.genero : 'N/A'}">MALE</span></td>
+            <td th:text="${emp.fechaAlta != null ? emp.fechaAlta : 'N/A'}">2026-06-16</td>
+            <td th:text="${#numbers.formatDecimal(emp.salario, 1, 'DEFAULT', 2, 'DEFAULT')}" class="fw-bold text-dark">0.00</td>
+            <td>
+              <span th:class="${emp.departamento != null} ? 'badge badge-success' : 'text-muted fst-italic'"
+                    th:text="${emp.departamento != null ? emp.departamento.getNombre() : 'Sin asignar'}">Desarrollo</span>
+            </td>
+            <td>
+              <!-- Sección de Contacto compacta -->
+              <div class="contact-info-sm">
+                <div><strong class="text-muted">Tel:</strong>
+                  <span th:if="${!#lists.isEmpty(emp.telefonos)}">
+                    <span th:each="tel, iterStat : ${emp.telefonos}" th:text="${tel.numero} + ${!iterStat.last ? '; ' : ''}"></span>
+                  </span>
+                  <span th:if="${#lists.isEmpty(emp.telefonos)}" class="text-muted fst-italic"
+                        th:text="#{message.no.data.recorded}"></span>
+                </div>
+                <div><strong class="text-muted">Email:</strong>
+                  <span th:if="${!#lists.isEmpty(emp.emails)}">
+                    <span th:each="cor, iterStat : ${emp.emails}" th:text="${cor.email} + ${!iterStat.last ? '; ' : ''}"></span>
+                  </span>
+                  <span th:if="${#lists.isEmpty(emp.emails)}" class="text-muted fst-italic"
+                        th:text="#{message.no.data.recorded}"></span>
+                </div>
+              </div>
+            </td>
+
+            <!-- Panel de Acciones con enlaces estilizados -->
+            <td>
+              <div class="d-flex justify-content-center align-items-center gap-2 action-links">
+                <a th:href="@{/intranet/empleados/detalle/{id}(id=${emp.id})}">Detalles</a>
+                <span class="divider">|</span>
+                <a th:href="@{/intranet/empleados/profile/{id}(id=${emp.id})}" th:text="#{word.profile}"></a>
+                <span class="divider">|</span>
+                <a th:href="@{/intranet/empleados/edit/{id}(id=${emp.id})}" class="text-primary-emphasis" th:text="#{word.edit}"></a>
+                <span class="divider">|</span>
+
+                <!-- Botón de borrado -->
+                <form th:action="@{/intranet/empleados/delete/{id}(id=${emp.id})}" method="post" class="d-inline"
+                      th:onclick="return confirm('¿Estás seguro de que deseas eliminar a ' + [[${emp.nombre}]] + ' y todos sus datos?');">
+                  <button type="submit" class="text-danger border-0 bg-transparent p-0 fw-bold" th:text="#{word.delete}"></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Estado alternativo: Si no hay datos en el sistema -->
+    <div th:if="${errorMensaje == null && (allEmpleados == null || #lists.isEmpty(allEmpleados))}" class="no-image-placeholder py-5">
+      <i class="fa-solid fa-folder-open mb-2"></i>
+      <span class="d-block text-secondary fw-semibold">No se encontraron registros en la tabla de empleados.</span>
+    </div>
+
+  </div>
+</div>

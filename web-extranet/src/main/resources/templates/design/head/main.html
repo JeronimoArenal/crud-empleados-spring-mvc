@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:fragment="home">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- 1. PRECARGA DE IMAGEN (Para evitar el retraso del LCP) -->
+    <link th:if="${backgroundImage != null}" rel="preload" th:href="${backgroundImage}" as="image" fetchpriority="high">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+ <!--   <title th:text="${pageTitle != null ? pageTitle : #messages.msg('header.label.title')}">
+    <title th:text="${pageTitle != null ? pageTitle : welcomeMessage}">
+
+        title
+    </title> -->
+    <title th:text="#{menu.about}"></title>
+
+    <!-- 2. CSS CRÍTICO (Carga normal para que el diseño NO se rompa) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Subimos los diseños específicos aquí para que se apliquen de inmediato -->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"> -->
+  <!--  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"> -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/formulario.css}">
+
+
+    <!-- 3. CSS SECUNDARIO (Estos sí pueden esperar un poco) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- 4. SCRIPTS (Siempre con defer para no bloquear) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+
+<!--    <script th:src="@{/js/users.js}" defer></script>
+    <script th:src="@{/js/air.js}" defer></script>
+    <script th:src="@{/js/land.js}" defer></script>
+    <script th:src="@{/js/water.js}" defer></script> -->
+</head>
+</html>

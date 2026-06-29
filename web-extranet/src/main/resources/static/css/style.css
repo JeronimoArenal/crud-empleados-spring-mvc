@@ -1,0 +1,131 @@
+/* --- Estilos Generales del Contenedor --- */
+.container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* --- Tarjeta Principal (Card) --- */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Encabezado dinámico (Verde Éxito) */
+.card-header.bg-success {
+    background: linear-gradient(135deg, #198754, #146c43) !important;
+    border-bottom: none;
+}
+
+.card-header h3 {
+    letter-spacing: 0.5px;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+    border-radius: 0 0 12px 12px;
+}
+
+/* --- Elementos del Formulario --- */
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Efecto Focus en Inputs */
+.form-control:focus, .form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+/* --- Modo Solo Lectura (Readonly) --- */
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled {
+    background-color: #f1f3f5;
+    color: #6c757d;
+    border-color: #e9ecef;
+    cursor: not-allowed;
+    box-shadow: none !important;
+}
+
+/* --- Mensajes de Error de Validación --- */
+.text-danger.small {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.alert-danger {
+    border-radius: 8px;
+    border: none;
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* --- Botones de Acción --- */
+.btn {
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+/* Botón Guardar (Verde) */
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+/* Botón Cancelar / Volver (Secundario) */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+    border-color: #565e64;
+}
+
+/* --- Subida de Imagen/Foto de Perfil --- */
+input[type="file"]::file-selector-button {
+    background-color: #e9ecef;
+    color: #495057;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #dee2e6;
+}
